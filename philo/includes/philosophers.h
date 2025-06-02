@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/04/17 14:40:58 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:30:49 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,20 @@
 # include <unistd.h>
 # include <stdio.h>
 
+// parser
+typedef struct s_args
+{
+	int			n_of_philo;
+	long long	time_to_die;
+	long long	time_to_eat;
+	long long	time_to_sleep;
+	int			n_of_rouds;
+	int			valid_args;
+}				t_args;
+
 // utils
 int	ft_strlen(char *str);
+int	check_args(t_args *args, int argc, char **argv);
 
 // error
 void	exit_error(char *message);
