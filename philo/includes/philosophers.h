@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/03 14:58:17 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:54:54 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ typedef struct s_args
 	int			n_of_rounds;
 	int			valid_args;
 }				t_args;
+
+typedef struct s_philosopher
+{
+	int			number;
+	int			state;
+}				philosopher;
 
 // utils
 int		ft_isdigit(int c);
