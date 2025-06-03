@@ -6,18 +6,23 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/02 19:30:49 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:57:09 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
+// libs
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
 
-// parser
+// variables
+# define INT_MAX 2147483647
+# define LLONG_MAX 9223372036854775807
+
+// parser struct
 typedef struct s_args
 {
 	int			n_of_philo;
