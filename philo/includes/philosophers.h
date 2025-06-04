@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/03 18:54:54 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/03 23:05:56 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # define INT_MAX 2147483647
 # define LLONG_MAX 9223372036854775807
 
-// parser struct
-typedef struct s_args
+// arguments
+typedef struct 	s_args
 {
 	int			n_of_philo;
 	long long	time_to_die;
@@ -33,11 +33,22 @@ typedef struct s_args
 	int			valid_args;
 }				t_args;
 
-typedef struct s_philosopher
+// create a status struct with enum and a struct that will be the table
+
+// philosopher
+
+typedef struct 			s_philosopher
 {
-	int			number;
-	int			state;
-}				philosopher;
+	int					id;
+	pthread_t			thread;
+	long long			last_meal_ts;
+	int					meal_count;
+
+	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		*right_fork;
+
+	struct s_table		*table;
+}						t_philosopher;
 
 // utils
 int		ft_isdigit(int c);
