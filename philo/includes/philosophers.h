@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/05 15:10:02 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:26:57 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <pthread.h>
 
 // variables
 # define INT_MAX 2147483647
@@ -31,10 +32,7 @@ typedef struct 	s_args
 	long long	time_to_sleep;
 	int			n_of_rounds;
 	int			valid_args;
-}				t_args;
-
-// table
-struct s_table;
+}	t_args;
 
 // status
 typedef enum e_status
@@ -51,6 +49,7 @@ typedef struct	s_philosopher
 {
 	int					id;
 	pthread_t			thread; // philosopher's thread id
+	t_status			status;
 	long long			last_meal_ts;
 	int					meal_count;
 
@@ -60,14 +59,35 @@ typedef struct	s_philosopher
 	struct s_table		*table;
 }	t_philosopher;
 
-// utils
-int		ft_isdigit(int c);
-int		ft_atopi(const char *str, int *res);
-int		ft_atopll(const char *str, long long *res);
-void	ft_putstr_fd(const char *str, int fd);
+// table
+typedef struct s_table
+{
+	t_args			args;
+	long long		start_time;
+	int				end_simulation;
+	t_philosopher	*philosophers;
 
-// check args
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	print_mutex;
+	pthread_mutex_t meal_mutex;
+
+}	t_table;
+
+// init
+int	init(t_table *table, int argc, char **argv);
+int	init_mutexes(t_table *table);
+int	init_philo(t_table *table);
+
+// utils
+int			ft_isdigit(int c);
+int			ft_atopi(const char *str, int *res);
+int			ft_atopll(const char *str, long long *res);
+void		ft_putstr_fd(const char *str, int fd);
+long long	get_time(void);
+
+// args
 int	check_args(t_args *args, int argc, char **argv);
+int	parse_args(t_args *args, int argc, char **argv);
 
 // error
 int	print_error(char *message);
