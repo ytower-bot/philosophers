@@ -6,15 +6,25 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:37:32 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/03 14:55:21 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:48:51 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+#include <sys/time.h>
 
 int	ft_is_digit(char c)
 {
 	return (c >= '0' && c <= '9');
+}
+
+long long	get_time(void)
+{
+	struct timeval	tv;
+	
+	if (gettimeofday(&tv, NULL) != 0)
+		return (-1); // tratar esse erro melhor dps
+	return ((tv.tv_sec * 1000LL) + tv.tv_usec / 1000); // sec to ms and µs to ms conversion
 }
 
 void	ft_putstr_fd(const char *str, int fd)
