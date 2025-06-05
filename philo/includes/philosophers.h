@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/03 23:05:56 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:10:02 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,24 @@ typedef struct 	s_args
 	int			valid_args;
 }				t_args;
 
-// create a status struct with enum and a struct that will be the table
+// table
+struct s_table;
+
+// status
+typedef enum e_status
+{
+	THINKING,
+	HUNGRY,
+	EATING,
+	SLEEPING,
+	DEAD
+}	t_status;
 
 // philosopher
-
-typedef struct 			s_philosopher
+typedef struct	s_philosopher
 {
 	int					id;
-	pthread_t			thread;
+	pthread_t			thread; // philosopher's thread id
 	long long			last_meal_ts;
 	int					meal_count;
 
@@ -48,7 +58,7 @@ typedef struct 			s_philosopher
 	pthread_mutex_t		*right_fork;
 
 	struct s_table		*table;
-}						t_philosopher;
+}	t_philosopher;
 
 // utils
 int		ft_isdigit(int c);
