@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/06 19:25:54 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/06 19:47:34 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ typedef struct s_table
 	pthread_mutex_t meal_mutex;
 
 }	t_table;
+
+// routine
+void	*routine(void *arg);
 
 // init
 int	init(t_table *table, int argc, char **argv);
