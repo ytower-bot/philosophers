@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/05 20:43:15 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/06 19:25:54 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,7 @@ int			ft_atopll(const char *str, long long *res);
 void		ft_putstr_fd(const char *str, int fd);
 long long	get_time(void);
 
-// args
-int	check_args(t_args *args, int argc, char **argv);
+// parser
 int	parse_args(t_args *args, int argc, char **argv);
 
 // error
