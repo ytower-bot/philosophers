@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 19:46:12 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/09 21:04:54 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/09 21:10:50 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	*routine(void *arg)
 	while(!philo->table->end_simulation)
 	{
 		philo_eat(philo);
-
 		print_status(philo, "is sleeping");
 		precise_sleep(philo->table->args.time_to_sleep, philo->table);
 		print_status(philo, "is thinking");
