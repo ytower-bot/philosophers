@@ -6,11 +6,12 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:37:32 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/05 20:48:51 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/09 20:28:41 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+#include <pthread.h>
 #include <sys/time.h>
 
 int	ft_is_digit(char c)
@@ -18,12 +19,38 @@ int	ft_is_digit(char c)
 	return (c >= '0' && c <= '9');
 }
 
+void	print_status(t_philosopher *philo, const char *status)
+{
+	long long	timestamp;
+
+	pthread_mutex_lock(&philo->table->print_mutex);
+	if (!philo->table->end_simulation)
+	{
+		timestamp = get_time() - philo->table->start_time;
+		printf("%lld %d %s\n", timestamp, philo->id, status);
+	}
+	pthread_mutex_unlock(&philo->table->print_mutex);
+}
+
+void	precise_sleep(long long ms, t_table *table)
+{
+	long long	start;
+
+	start = get_time();
+	while ((get_time() - start) < ms)
+	{
+		if (!table->end_simulation)
+			break ;
+		usleep(500);
+	}
+}
+
 long long	get_time(void)
 {
 	struct timeval	tv;
 	
 	if (gettimeofday(&tv, NULL) != 0)
-		return (-1); // tratar esse erro melhor dps
+		return (-1);
 	return ((tv.tv_sec * 1000LL) + tv.tv_usec / 1000); // sec to ms and µs to ms conversion
 }
 
