@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/06 19:47:34 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/09 20:37:06 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ typedef struct s_table
 // routine
 void	*routine(void *arg);
 
+// routine utils
+void	philo_eat(t_philosopher *philo);
+
 // init
 int	init(t_table *table, int argc, char **argv);
 int	init_mutexes(t_table *table);
@@ -88,6 +91,8 @@ int			ft_atopi(const char *str, int *res);
 int			ft_atopll(const char *str, long long *res);
 void		ft_putstr_fd(const char *str, int fd);
 long long	get_time(void);
+void		precise_sleep(long long ms, t_table *table);
+void		print_status(t_philosopher *philo, const char *status);
 
 // parser
 int	parse_args(t_args *args, int argc, char **argv);
