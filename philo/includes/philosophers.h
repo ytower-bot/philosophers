@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/09 20:37:06 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:27:01 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ typedef struct s_table
 }	t_table;
 
 // routine
+int		start_simulation(t_table *table);
 void	*routine(void *arg);
+
 
 // routine utils
 void	philo_eat(t_philosopher *philo);
@@ -93,6 +95,7 @@ void		ft_putstr_fd(const char *str, int fd);
 long long	get_time(void);
 void		precise_sleep(long long ms, t_table *table);
 void		print_status(t_philosopher *philo, const char *status);
+void		fclean(t_table *table);
 
 // parser
 int	parse_args(t_args *args, int argc, char **argv);
