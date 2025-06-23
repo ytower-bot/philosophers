@@ -48,6 +48,8 @@ int init_mutexes(t_table *table)
 		return (print_error("print_mutex initialization failed"));
 	if (pthread_mutex_init(&table->meal_mutex, NULL) != 0)
 		return (print_error("meal_mutex initialization failed"));
+	if (pthread_mutex_init(&table->end_mutex, NULL) != 0)
+		return (print_error("end_mutex initialization failed"));
 	return (1);
 }
 

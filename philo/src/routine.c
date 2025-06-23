@@ -27,19 +27,29 @@ void	monitor(t_table *table)
 			if (get_time() - table->philosophers[i].last_meal_ts > table->args.time_to_die)
 			{
 				print_status(&table->philosophers[i], "died");
+				pthread_mutex_lock(&table->end_mutex);
 				table->end_simulation = 1;
+				pthread_mutex_unlock(&table->end_mutex);
 			}
 			if (table->args.n_of_rounds != -1 && table->philosophers[i].meal_count < table->args.n_of_rounds)
 				all_have_eaten = 0;
 			pthread_mutex_unlock(&table->meal_mutex);
 		}
+		
+		pthread_mutex_lock(&table->end_mutex);
 		if (table->end_simulation)
+		{
+			pthread_mutex_unlock(&table->end_mutex);
 			break ;
+		}
 		if (table->args.n_of_rounds != -1 && all_have_eaten == 1)
 		{
 			table->end_simulation = 1;
+			pthread_mutex_unlock(&table->end_mutex);
 			break ;
 		}
+		pthread_mutex_unlock(&table->end_mutex);
+		usleep(1000);
 	}
 }
 
@@ -80,8 +90,16 @@ void	*routine(void *arg)
 	}
 	if (philo->id % 2 == 0)
 		precise_sleep(5, philo->table);
-	while(!philo->table->end_simulation)
+	
+	while (1)
 	{
+		pthread_mutex_lock(&table->end_mutex);
+		if (table->end_simulation)
+		{
+			pthread_mutex_unlock(&table->end_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&table->end_mutex);
 		philo_eat(philo);
 		print_status(philo, "is sleeping");
 		precise_sleep(philo->table->args.time_to_sleep, philo->table);
