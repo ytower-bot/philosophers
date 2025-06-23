@@ -30,6 +30,8 @@ void	monitor(t_table *table)
 				pthread_mutex_lock(&table->end_mutex);
 				table->end_simulation = 1;
 				pthread_mutex_unlock(&table->end_mutex);
+				pthread_mutex_unlock(&table->meal_mutex);
+				return ;
 			}
 			if (table->args.n_of_rounds != -1 && table->philosophers[i].meal_count < table->args.n_of_rounds)
 				all_have_eaten = 0;
