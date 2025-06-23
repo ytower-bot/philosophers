@@ -22,11 +22,13 @@ void	print_status(t_philosopher *philo, const char *status)
 	long long	timestamp;
 
 	pthread_mutex_lock(&philo->table->print_mutex);
+	pthread_mutex_lock(&philo->table->end_mutex);
 	if (!philo->table->end_simulation)
 	{
 		timestamp = get_time() - philo->table->start_time;
 		printf("%lld %d %s\n", timestamp, philo->id, status);
 	}
+	pthread_mutex_unlock(&philo->table->end_mutex);
 	pthread_mutex_unlock(&philo->table->print_mutex);
 }
 
@@ -37,8 +39,13 @@ void	precise_sleep(long long ms, t_table *table)
 	start = get_time();
 	while ((get_time() - start) < ms)
 	{
-		if (!table->end_simulation)
+		pthread_mutex_lock(&table->end_mutex);
+		if (table->end_simulation)
+		{
+			pthread_mutex_unlock(&table->end_mutex);
 			break ;
+		}
+		pthread_mutex_unlock(&table->end_mutex);
 		usleep(500);
 	}
 }
@@ -138,6 +145,7 @@ void	fclean(t_table *table)
 	}
 	pthread_mutex_destroy(&table->meal_mutex);
 	pthread_mutex_destroy(&table->print_mutex);
+	pthread_mutex_destroy(&table->end_mutex);
 	if (table->forks)
 		free(table->forks);
 	if (table->philosophers)
