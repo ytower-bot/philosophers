@@ -16,9 +16,9 @@ void	philo_eat(t_philosopher *philo)
 {
 	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(philo->right_fork);
-		print_status(philo, "has taken a fork");
 		pthread_mutex_lock(philo->left_fork);
+		print_status(philo, "has taken a fork");
+		pthread_mutex_lock(philo->right_fork);
 		print_status(philo, "has taken a fork");
 	}
 	else
@@ -34,6 +34,14 @@ void	philo_eat(t_philosopher *philo)
 	pthread_mutex_unlock(&philo->table->meal_mutex);
 	print_status(philo, "is eating");
 	precise_sleep(philo->table->args.time_to_eat, philo->table);
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+	}
 }
