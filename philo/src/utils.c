@@ -6,13 +6,11 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:37:32 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/09 20:28:41 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:23:40 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
-#include <pthread.h>
-#include <sys/time.h>
 
 int	ft_is_digit(char c)
 {
@@ -126,4 +124,22 @@ int	ft_atopi(const char *str, int *res)
 		return (0);
 	*res = (int)tmp;
 	return (1);
+}
+
+void	fclean(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->args.n_of_philo)
+	{
+		pthread_mutex_destroy(&table->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&table->meal_mutex);
+	pthread_mutex_destroy(&table->print_mutex);
+	if (table->forks)
+		free(table->forks);
+	if (table->philosophers)
+		free(table->philosophers);
 }

@@ -6,12 +6,11 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:37:28 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/09 20:42:26 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:22:34 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
-#include <pthread.h>
 
 void	philo_eat(t_philosopher *philo)
 {
