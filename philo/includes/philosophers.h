@@ -70,7 +70,8 @@ typedef struct s_table
 
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
-	pthread_mutex_t meal_mutex;
+	pthread_mutex_t	meal_mutex;
+	pthread_mutex_t	end_mutex;
 
 }	t_table;
 
