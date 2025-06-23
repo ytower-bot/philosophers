@@ -14,14 +14,33 @@
 
 int init(t_table *table, int argc, char **argv)
 {
+	table->forks = NULL;
+	table->philosophers = NULL;
+	
 	if (!parse_args(&table->args, argc, argv))
 		return (0);
 	if (!init_mutexes(table))
 		return (0);
 	if (!init_philo(table))
-		return (free(table->forks), 0);
+	{
+		if (table->forks)
+		{
+			for (int i = 0; i < table->args.n_of_philo; i++)
+				pthread_mutex_destroy(&table->forks[i]);
+			free(table->forks);
+		}
+		pthread_mutex_destroy(&table->print_mutex);
+		pthread_mutex_destroy(&table->meal_mutex);
+		pthread_mutex_destroy(&table->end_mutex);
+		return (0);
+	}
 	table->end_simulation = 0;
 	table->start_time = get_time();
+	if (table->start_time == -1)
+	{
+		fclean(table);
+		return (print_error("Failed to get system time"));
+	}
 	for (int i = 0; i < table->args.n_of_philo; i++)
 		table->philosophers[i].last_meal_ts = table->start_time;
 	return (1);
