@@ -22,6 +22,8 @@ int init(t_table *table, int argc, char **argv)
 		return (free(table->forks), 0);
 	table->end_simulation = 0;
 	table->start_time = get_time();
+	for (int i = 0; i < table->args.n_of_philo; i++)
+		table->philosophers[i].last_meal_ts = table->start_time;
 	return (1);
 }
 
@@ -66,7 +68,6 @@ int	init_philo(t_table *table)
 		table->philosophers[i].id = i + 1;
 		table->philosophers[i].meal_count = 0;
 		table->philosophers[i].table = table;
-		table->philosophers[i].last_meal_ts = 0;
 		table->philosophers[i].left_fork = &table->forks[i];
 		table->philosophers[i].right_fork = &table->forks[(i + 1) % table->args.n_of_philo];
 		i++;
