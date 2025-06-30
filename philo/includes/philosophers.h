@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/30 15:41:09 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/30 17:10:04 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_table
 	t_args			args;
 	long long		start_time;
 	int				end_simulation;
-	t_philosopher	*philosophers;
+	t_philosopher	*philo;
 
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
@@ -78,7 +78,6 @@ typedef struct s_table
 // routine
 int		start_simulation(t_table *table);
 void	*routine(void *arg);
-
 
 // routine utils
 void	philo_eat(t_philosopher *philo);
@@ -93,10 +92,12 @@ int			ft_isdigit(int c);
 int			ft_atopi(const char *str, int *res);
 int			ft_atopll(const char *str, long long *res);
 void		ft_putstr_fd(const char *str, int fd);
+long long	get_time(void);
+
+// mutex utils
 void		precise_sleep(long long ms, t_table *table);
 void		print_status(t_philosopher *philo, const char *status);
 void		fclean(t_table *table);
-long long	get_time(void);
 
 // parser
 int	parse_args(t_args *args, int argc, char **argv);
