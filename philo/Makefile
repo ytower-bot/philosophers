@@ -6,7 +6,7 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra -pthread -I $(INCLUDE)
 
 
-SRC_FILES = main.c utils.c error.c parser.c init.c routine.c routine_utils.c
+SRC_FILES = main.c utils.c error.c parser.c init.c routine.c routine_utils.c mutex_utils.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
