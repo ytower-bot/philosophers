@@ -6,17 +6,18 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 19:42:55 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/05 20:27:09 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:57:18 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-int init(t_table *table, int argc, char **argv)
+int	init(t_table *table, int argc, char **argv)
 {
+	int	i;
+
 	table->forks = NULL;
-	table->philosophers = NULL;
-	
+	table->philo = NULL;
 	if (!parse_args(&table->args, argc, argv))
 		return (0);
 	if (!init_mutexes(table))
@@ -25,8 +26,9 @@ int init(t_table *table, int argc, char **argv)
 	{
 		if (table->forks)
 		{
-			for (int i = 0; i < table->args.n_of_philo; i++)
-				pthread_mutex_destroy(&table->forks[i]);
+			i = 0;
+			while (i < table->args.n_of_philo)
+				pthread_mutex_destroy(&table->forks[i++]);
 			free(table->forks);
 		}
 		pthread_mutex_destroy(&table->print_mutex);
@@ -37,19 +39,17 @@ int init(t_table *table, int argc, char **argv)
 	table->end_simulation = 0;
 	table->start_time = get_time();
 	if (table->start_time == -1)
-	{
-		fclean(table);
-		return (print_error("Failed to get system time"));
-	}
-	for (int i = 0; i < table->args.n_of_philo; i++)
-		table->philosophers[i].last_meal_ts = table->start_time;
+		return (fclean(table), print_error("Failed to get system time"));
+	i = 0;
+	while (i < table->args.n_of_philo)
+		table->philo[i++].last_meal_ts = table->start_time;
 	return (1);
 }
 
-int init_mutexes(t_table *table)
+int	init_mutexes(t_table *table)
 {
 	int	i;
-	
+
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->args.n_of_philo);
 	if (!table->forks)
 		return (print_error("Forks memory allocation failed"));
@@ -78,17 +78,17 @@ int	init_philo(t_table *table)
 {
 	int	i;
 
-	table->philosophers = malloc(sizeof(t_philosopher) * table->args.n_of_philo);
-	if (!table->philosophers)
+	table->philo = malloc(sizeof(t_philosopher) * table->args.n_of_philo);
+	if (!table->philo)
 		return (print_error("Philosophers memory allocation failed"));
 	i = 0;
 	while (i < table->args.n_of_philo)
 	{
-		table->philosophers[i].id = i + 1;
-		table->philosophers[i].meal_count = 0;
-		table->philosophers[i].table = table;
-		table->philosophers[i].left_fork = &table->forks[i];
-		table->philosophers[i].right_fork = &table->forks[(i + 1) % table->args.n_of_philo];
+		table->philo[i].id = i + 1;
+		table->philo[i].meal_count = 0;
+		table->philo[i].table = table;
+		table->philo[i].left_fork = &table->forks[i];
+		table->philo[i].right_fork = &table->forks[(i + 1) % table->args.n_of_philo];
 		i++;
 	}
 	return (1);
