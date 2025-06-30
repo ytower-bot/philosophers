@@ -6,11 +6,12 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 19:42:55 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/30 16:57:18 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:05:59 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+#include "../includes/utils.h"
 
 int	init(t_table *table, int argc, char **argv)
 {

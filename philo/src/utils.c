@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:37:32 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/20 16:23:40 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:11:46 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,54 +17,13 @@ int	ft_is_digit(char c)
 	return (c >= '0' && c <= '9');
 }
 
-void	print_status(t_philosopher *philo, const char *status)
-{
-	long long	timestamp;
-
-	pthread_mutex_lock(&philo->table->print_mutex);
-	pthread_mutex_lock(&philo->table->end_mutex);
-	if (!philo->table->end_simulation)
-	{
-		timestamp = get_time() - philo->table->start_time;
-		printf("%lld %d %s\n", timestamp, philo->id, status);
-	}
-	pthread_mutex_unlock(&philo->table->end_mutex);
-	pthread_mutex_unlock(&philo->table->print_mutex);
-}
-
-void	precise_sleep(long long ms, t_table *table)
-{
-	long long	start;
-	long long	elapsed;
-
-	start = get_time();
-	if (start == -1)
-		return ;
-	
-	while (1)
-	{
-		elapsed = get_time() - start;
-		if (elapsed == -1 || elapsed >= ms)
-			break ;
-			
-		pthread_mutex_lock(&table->end_mutex);
-		if (table->end_simulation)
-		{
-			pthread_mutex_unlock(&table->end_mutex);
-			break ;
-		}
-		pthread_mutex_unlock(&table->end_mutex);
-		usleep(500);
-	}
-}
-
 long long	get_time(void)
 {
 	struct timeval	tv;
-	
+
 	if (gettimeofday(&tv, NULL) != 0)
 		return (-1);
-	return ((tv.tv_sec * 1000LL) + tv.tv_usec / 1000); // sec to ms and µs to ms conversion
+	return ((tv.tv_sec * 1000LL) + tv.tv_usec / 1000);
 }
 
 void	ft_putstr_fd(const char *str, int fd)
@@ -139,28 +98,4 @@ int	ft_atopi(const char *str, int *res)
 		return (0);
 	*res = (int)tmp;
 	return (1);
-}
-
-void	fclean(t_table *table)
-{
-	int	i;
-
-	if (!table)
-		return ;
-	
-	if (table->forks)
-	{
-		i = 0;
-		while (i < table->args.n_of_philo)
-		{
-			pthread_mutex_destroy(&table->forks[i]);
-			i++;
-		}
-		free(table->forks);
-	}
-	pthread_mutex_destroy(&table->meal_mutex);
-	pthread_mutex_destroy(&table->print_mutex);
-	pthread_mutex_destroy(&table->end_mutex);
-	if (table->philosophers)
-		free(table->philosophers);
 }

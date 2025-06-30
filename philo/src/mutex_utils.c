@@ -6,11 +6,12 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:09:12 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/30 16:11:06 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:14:03 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+#include "../includes/utils.h"
 
 void	print_status(t_philosopher *philo, const char *status)
 {
@@ -70,6 +71,6 @@ void	fclean(t_table *table)
 	pthread_mutex_destroy(&table->meal_mutex);
 	pthread_mutex_destroy(&table->print_mutex);
 	pthread_mutex_destroy(&table->end_mutex);
-	if (table->philosophers)
-		free(table->philosophers);
+	if (table->philo)
+		free(table->philo);
 }

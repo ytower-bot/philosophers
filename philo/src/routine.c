@@ -6,16 +6,17 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 19:46:12 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/20 17:33:32 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:06:31 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+#include "../includes/utils.h"
 
 void	monitor(t_table *table)
 {
 	int	i;
-	int all_have_eaten;
+	int	all_have_eaten;
 
 	while (1)
 	{
@@ -24,20 +25,19 @@ void	monitor(t_table *table)
 		while (++i < table->args.n_of_philo)
 		{
 			pthread_mutex_lock(&table->meal_mutex);
-			if (get_time() - table->philosophers[i].last_meal_ts > table->args.time_to_die)
+			if (get_time() - table->philo[i].last_meal_ts > table->args.time_to_die)
 			{
-				print_status(&table->philosophers[i], "died");
+				print_status(&table->philo[i], "died");
 				pthread_mutex_lock(&table->end_mutex);
 				table->end_simulation = 1;
 				pthread_mutex_unlock(&table->end_mutex);
 				pthread_mutex_unlock(&table->meal_mutex);
 				return ;
 			}
-			if (table->args.n_of_rounds != -1 && table->philosophers[i].meal_count < table->args.n_of_rounds)
+			if (table->args.n_of_rounds != -1 && table->philo[i].meal_count < table->args.n_of_rounds)
 				all_have_eaten = 0;
 			pthread_mutex_unlock(&table->meal_mutex);
 		}
-		
 		pthread_mutex_lock(&table->end_mutex);
 		if (table->end_simulation)
 		{
@@ -62,7 +62,7 @@ int	start_simulation(t_table *table)
 	i = 0;
 	while (i < table->args.n_of_philo)
 	{
-		if (pthread_create(&table->philosophers[i].thread, NULL, &routine, &table->philosophers[i]) != 0)
+		if (pthread_create(&table->philo[i].thread, NULL, &routine, &table->philo[i]) != 0)
 			return (print_error("Failed creating philosopher thread"));
 		i++;
 	}
@@ -70,7 +70,7 @@ int	start_simulation(t_table *table)
 	i = 0;
 	while (i < table->args.n_of_philo)
 	{
-		if (pthread_join(table->philosophers[i].thread, NULL) != 0)
+		if (pthread_join(table->philo[i].thread, NULL) != 0)
 			return (print_error("Failed joining philosopher thread"));
 		i++;
 	}
@@ -92,7 +92,6 @@ void	*routine(void *arg)
 	}
 	if (philo->id % 2 == 0)
 		precise_sleep(5, philo->table);
-	
 	while (1)
 	{
 		pthread_mutex_lock(&table->end_mutex);
