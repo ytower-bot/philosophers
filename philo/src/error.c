@@ -6,11 +6,11 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:34:58 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/03 14:38:36 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/30 17:22:50 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../includes/utils.h"
 
 int	print_error(char *message)
 {
