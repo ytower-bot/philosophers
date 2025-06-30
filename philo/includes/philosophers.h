@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/20 17:27:01 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:41:09 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef enum e_status
 typedef struct	s_philosopher
 {
 	int					id;
-	pthread_t			thread; // philosopher's thread id
+	pthread_t			thread;
 	t_status			status;
 	long long			last_meal_ts;
 	int					meal_count;
@@ -93,10 +93,10 @@ int			ft_isdigit(int c);
 int			ft_atopi(const char *str, int *res);
 int			ft_atopll(const char *str, long long *res);
 void		ft_putstr_fd(const char *str, int fd);
-long long	get_time(void);
 void		precise_sleep(long long ms, t_table *table);
 void		print_status(t_philosopher *philo, const char *status);
 void		fclean(t_table *table);
+long long	get_time(void);
 
 // parser
 int	parse_args(t_args *args, int argc, char **argv);
