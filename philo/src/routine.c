@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 19:46:12 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/30 20:06:31 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/30 21:06:35 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,12 @@
 
 void	monitor(t_table *table)
 {
-	int	i;
 	int	all_have_eaten;
 
+	all_have_eaten = 1;
 	while (1)
 	{
-		all_have_eaten = 1;
-		i = -1;
-		while (++i < table->args.n_of_philo)
-		{
-			pthread_mutex_lock(&table->meal_mutex);
-			if (get_time() - table->philo[i].last_meal_ts > table->args.time_to_die)
-			{
-				print_status(&table->philo[i], "died");
-				pthread_mutex_lock(&table->end_mutex);
-				table->end_simulation = 1;
-				pthread_mutex_unlock(&table->end_mutex);
-				pthread_mutex_unlock(&table->meal_mutex);
-				return ;
-			}
-			if (table->args.n_of_rounds != -1 && table->philo[i].meal_count < table->args.n_of_rounds)
-				all_have_eaten = 0;
-			pthread_mutex_unlock(&table->meal_mutex);
-		}
+		meal_check(table, &all_have_eaten);
 		pthread_mutex_lock(&table->end_mutex);
 		if (table->end_simulation)
 		{
