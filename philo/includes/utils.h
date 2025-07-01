@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:18:47 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/30 17:20:50 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/06/30 21:07:03 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,8 @@ long long	get_time(void);
 void		precise_sleep(long long ms, t_table *table);
 void		print_status(t_philosopher *philo, const char *status);
 void		fclean(t_table *table);
+
+// monitor utils
+void	meal_check(t_table *table, int *all_have_eaten);
 
 #endif
