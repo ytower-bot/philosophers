@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:09:12 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/30 20:14:03 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:36:08 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	fclean(t_table *table)
 	if (table->forks)
 	{
 		i = 0;
-		while (i < table->args.n_of_philo)
+		while (i < table->args.n_philo)
 		{
 			pthread_mutex_destroy(&table->forks[i]);
 			i++;
