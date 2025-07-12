@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 19:42:55 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/07/12 16:38:02 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:45:49 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	free_philo(t_table *table)
 	if (table->forks)
 	{
 		i = 0;
-		while (i < table->args.n_of_philo)
+		while (i < table->args.n_philo)
 			pthread_mutex_destroy(&table->forks[i++]);
 		free(table->forks);
 	}
@@ -47,7 +47,7 @@ int	init(t_table *table, int argc, char **argv)
 	if (table->start_time == -1)
 		return (fclean(table), print_error("Failed to get system time"));
 	i = 0;
-	while (i < table->args.n_of_philo)
+	while (i < table->args.n_philo)
 		table->philo[i++].last_meal_ts = table->start_time;
 	return (1);
 }
@@ -56,11 +56,11 @@ int	init_mutexes(t_table *table)
 {
 	int	i;
 
-	table->forks = malloc(sizeof(pthread_mutex_t) * table->args.n_of_philo);
+	table->forks = malloc(sizeof(pthread_mutex_t) * table->args.n_philo);
 	if (!table->forks)
 		return (print_error("Forks memory allocation failed"));
 	i = 0;
-	while (i < table->args.n_of_philo)
+	while (i < table->args.n_philo)
 	{
 		if (pthread_mutex_init(&table->forks[i], NULL) != 0)
 		{
@@ -84,17 +84,17 @@ int	init_philo(t_table *table)
 {
 	int	i;
 
-	table->philo = malloc(sizeof(t_philosopher) * table->args.n_of_philo);
+	table->philo = malloc(sizeof(t_philosopher) * table->args.n_philo);
 	if (!table->philo)
 		return (print_error("Philosophers memory allocation failed"));
 	i = 0;
-	while (i < table->args.n_of_philo)
+	while (i < table->args.n_philo)
 	{
 		table->philo[i].id = i + 1;
 		table->philo[i].meal_count = 0;
 		table->philo[i].table = table;
 		table->philo[i].lfork = &table->forks[i];
-		table->philo[i].rfork = &table->forks[(i + 1) % table->args.n_of_philo];
+		table->philo[i].rfork = &table->forks[(i + 1) % table->args.n_philo];
 		i++;
 	}
 	return (1);

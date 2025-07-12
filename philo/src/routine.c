@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 19:46:12 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/07/12 17:38:12 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:49:24 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	*routine(void *arg)
 	if (table->args.n_philo == 1)
 	{
 		print_status(philo, "has taken a fork");
-		precise_sleep(table->args.time_to_die, table);
+		precise_sleep(table->args.t_die, table);
 		return (NULL);
 	}
 	if (philo->id % 2 == 0)
@@ -86,7 +86,7 @@ void	*routine(void *arg)
 		pthread_mutex_unlock(&table->end_mutex);
 		philo_eat(philo);
 		print_status(philo, "is sleeping");
-		precise_sleep(philo->table->args.time_to_sleep, philo->table);
+		precise_sleep(philo->table->args.t_sleep, philo->table);
 		print_status(philo, "is thinking");
 	}
 	return (NULL);

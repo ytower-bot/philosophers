@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:37:28 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/07/12 16:40:12 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:50:03 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	philo_eat(t_philosopher *philo)
 	philo->meal_count++;
 	pthread_mutex_unlock(&philo->table->meal_mutex);
 	print_status(philo, "is eating");
-	precise_sleep(philo->table->args.time_to_eat, philo->table);
+	precise_sleep(philo->table->args.t_eat, philo->table);
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_unlock(philo->rfork);
