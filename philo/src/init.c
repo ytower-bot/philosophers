@@ -6,12 +6,29 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 19:42:55 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/30 20:05:59 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/07/12 16:38:02 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 #include "../includes/utils.h"
+#include <pthread.h>
+
+static void	free_philo(t_table *table)
+{
+	int	i;
+
+	if (table->forks)
+	{
+		i = 0;
+		while (i < table->args.n_of_philo)
+			pthread_mutex_destroy(&table->forks[i++]);
+		free(table->forks);
+	}
+	pthread_mutex_destroy(&table->print_mutex);
+	pthread_mutex_destroy(&table->meal_mutex);
+	pthread_mutex_destroy(&table->end_mutex);
+}
 
 int	init(t_table *table, int argc, char **argv)
 {
@@ -24,19 +41,7 @@ int	init(t_table *table, int argc, char **argv)
 	if (!init_mutexes(table))
 		return (0);
 	if (!init_philo(table))
-	{
-		if (table->forks)
-		{
-			i = 0;
-			while (i < table->args.n_of_philo)
-				pthread_mutex_destroy(&table->forks[i++]);
-			free(table->forks);
-		}
-		pthread_mutex_destroy(&table->print_mutex);
-		pthread_mutex_destroy(&table->meal_mutex);
-		pthread_mutex_destroy(&table->end_mutex);
-		return (0);
-	}
+		return (free_philo(table), 0);
 	table->end_simulation = 0;
 	table->start_time = get_time();
 	if (table->start_time == -1)
@@ -88,8 +93,8 @@ int	init_philo(t_table *table)
 		table->philo[i].id = i + 1;
 		table->philo[i].meal_count = 0;
 		table->philo[i].table = table;
-		table->philo[i].left_fork = &table->forks[i];
-		table->philo[i].right_fork = &table->forks[(i + 1) % table->args.n_of_philo];
+		table->philo[i].lfork = &table->forks[i];
+		table->philo[i].rfork = &table->forks[(i + 1) % table->args.n_of_philo];
 		i++;
 	}
 	return (1);
