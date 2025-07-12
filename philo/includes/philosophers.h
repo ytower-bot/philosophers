@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/07/12 16:37:30 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/07/12 16:56:52 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@
 // arguments
 typedef struct s_args
 {
-	int			n_of_philo;
+	int			n_philo;
 	long long	time_to_die;
 	long long	time_to_eat;
 	long long	time_to_sleep;
-	int			n_of_rounds;
+	int			rounds;
 	int			valid_args;
 }	t_args;
 
