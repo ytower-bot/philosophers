@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/30 19:59:11 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/07/12 16:37:30 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ typedef struct s_philosopher
 	long long			last_meal_ts;
 	int					meal_count;
 
-	pthread_mutex_t		*left_fork;
-	pthread_mutex_t		*right_fork;
+	pthread_mutex_t		*lfork;
+	pthread_mutex_t		*rfork;
 
 	struct s_table		*table;
 }	t_philosopher;
