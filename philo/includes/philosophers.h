@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/07/12 16:56:52 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:44:23 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,15 @@
 // variables
 # define INT_MAX 2147483647
 # define LLONG_MAX 9223372036854775807
+# define T_MAX 1000000
 
 // arguments
 typedef struct s_args
 {
 	int			n_philo;
-	long long	time_to_die;
-	long long	time_to_eat;
-	long long	time_to_sleep;
+	long long	t_die;
+	long long	t_eat;
+	long long	t_sleep;
 	int			rounds;
 	int			valid_args;
 }	t_args;
