@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:37:32 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/30 16:11:46 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/07/12 18:46:32 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ int	ft_atopll(const char *str, long long *res)
 		tmp = tmp * 10 + (str[i] - '0');
 		i++;
 	}
-	if (str[i] != '\0')
-		return (0);
-	if (tmp <= 0)
+	if (str[i] != '\0' || tmp <= 0)
 		return (0);
 	*res = tmp;
 	return (1);
@@ -92,10 +90,8 @@ int	ft_atopi(const char *str, int *res)
 		tmp = tmp * 10 + (str[i] - '0');
 		i++;
 	}
-	if (str[i] != '\0')
+	if (str[i] != '\0' || tmp <= 0 || tmp > INT_MAX)
 		return (0);
-	if (tmp <= 0 || tmp > INT_MAX)
-		return (0);
-	*res = (int)tmp;
+	*res = tmp;
 	return (1);
 }
