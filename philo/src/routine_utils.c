@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:37:28 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/06/30 20:13:18 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/07/12 16:40:12 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void	philo_eat(t_philosopher *philo)
 {
 	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(philo->left_fork);
+		pthread_mutex_lock(philo->lfork);
 		print_status(philo, "has taken a fork");
-		pthread_mutex_lock(philo->right_fork);
+		pthread_mutex_lock(philo->rfork);
 		print_status(philo, "has taken a fork");
 	}
 	else
 	{
-		pthread_mutex_lock(philo->right_fork);
+		pthread_mutex_lock(philo->rfork);
 		print_status(philo, "has taken a fork");
-		pthread_mutex_lock(philo->left_fork);
+		pthread_mutex_lock(philo->lfork);
 		print_status(philo, "has taken a fork");
 	}
 	pthread_mutex_lock(&philo->table->meal_mutex);
@@ -37,12 +37,12 @@ void	philo_eat(t_philosopher *philo)
 	precise_sleep(philo->table->args.time_to_eat, philo->table);
 	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->rfork);
+		pthread_mutex_unlock(philo->lfork);
 	}
 	else
 	{
-		pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->lfork);
+		pthread_mutex_unlock(philo->rfork);
 	}
 }
