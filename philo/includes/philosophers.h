@@ -6,7 +6,7 @@
 /*   By: yfaustin <yfaustin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:56:07 by yfaustin          #+#    #+#             */
-/*   Updated: 2025/07/12 17:44:23 by yfaustin         ###   ########.fr       */
+/*   Updated: 2025/07/12 18:22:18 by yfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef enum e_status
 typedef struct s_philosopher
 {
 	int					id;
-	pthread_t			thread;
+	pthread_t			tid; // thread id
 	t_status			status;
 	long long			last_meal_ts;
 	int					meal_count;
@@ -78,7 +78,7 @@ typedef struct s_table
 
 // routine
 int		start_simulation(t_table *table);
-void	*routine(void *arg);
+void	*act(void *arg);
 
 // routine utils
 void	philo_eat(t_philosopher *philo);
