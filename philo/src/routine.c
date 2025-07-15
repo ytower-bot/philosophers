@@ -82,7 +82,13 @@ void	*act(void *arg)
 
 	philo = (t_philosopher *)arg;
 	table = philo->table;
-	lonely_philo(table);
+	
+	if (table->args.n_philo == 1)
+	{
+		lonely_philo(table);
+		return (NULL);
+	}
+	
 	if (philo->id % 2 == 0)
 		precise_sleep(5, philo->table);
 	while (1)
@@ -94,9 +100,28 @@ void	*act(void *arg)
 			break ;
 		}
 		pthread_mutex_unlock(&table->end_mutex);
+		
 		philo_eat(philo);
+		
+		pthread_mutex_lock(&table->end_mutex);
+		if (table->end_simulation)
+		{
+			pthread_mutex_unlock(&table->end_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&table->end_mutex);
+		
 		print_status(philo, "is sleeping");
 		precise_sleep(philo->table->args.t_sleep, philo->table);
+		
+		pthread_mutex_lock(&table->end_mutex);
+		if (table->end_simulation)
+		{
+			pthread_mutex_unlock(&table->end_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&table->end_mutex);
+		
 		print_status(philo, "is thinking");
 	}
 	return (NULL);

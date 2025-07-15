@@ -17,6 +17,14 @@ void	print_status(t_philosopher *philo, const char *status)
 {
 	long long	timestamp;
 
+	pthread_mutex_lock(&philo->table->end_mutex);
+	if (philo->table->end_simulation)
+	{
+		pthread_mutex_unlock(&philo->table->end_mutex);
+		return ;
+	}
+	pthread_mutex_unlock(&philo->table->end_mutex);
+	
 	pthread_mutex_lock(&philo->table->print_mutex);
 	pthread_mutex_lock(&philo->table->end_mutex);
 	if (!philo->table->end_simulation)

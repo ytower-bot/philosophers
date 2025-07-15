@@ -19,6 +19,7 @@ static void	eat(t_philosopher *philo)
 	philo->last_meal_ts = get_time();
 	philo->meal_count++;
 	pthread_mutex_unlock(&philo->table->meal_mutex);
+	
 	print_status(philo, "is eating");
 	precise_sleep(philo->table->args.t_eat, philo->table);
 }
