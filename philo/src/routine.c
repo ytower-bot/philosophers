@@ -59,6 +59,12 @@ int	start_simulation(t_table *table)
 			return (print_error("Failed joining philosopher thread"));
 		i++;
 	}
+	if (table->args.rounds != -1)
+	{
+		long long timestamp = get_time() - table->start_time;
+		printf("%lld All philosophers have finished eating\n", timestamp);
+		fflush(stdout);
+	}
 	return (1);
 }
 
